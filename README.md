@@ -1,0 +1,1 @@
+Esse código tem a finalidade de exibir um relatório de casos de Dengue a partir de uma tabela de dados que considera as seguintes colunas: Data, Habitantes, Bairro, Casos Suspeitos, Casos Negativos e Casos Confirmados. A leitura e gravação é feita a partir da biblioteca csv.
