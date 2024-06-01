@@ -1,5 +1,14 @@
+#Autor: Adson Victor de Souza Alves
+#Componente Curricular: Algoritmos e Programação I
+#Concluido em: 01/06/2024
+
+#Declaro que este código foi elaborado por mim de forma individual e não contém nenhum
+#trecho de código de outro colega ou de outro autor, tais como provindos de livros e
+#apostilas, e páginas ou documentos eletrônicos da Internet. Qualquer trecho de código
+#de outra autoria que não a minha está destacado com uma citação para o autor e a fonte
+#do código, e estou ciente que estes trechos não serão considerados para fins de avaliação.
+
 import csv
-import os
 
 #MENU
 
@@ -8,12 +17,11 @@ def menu(list):
     enum = 1
     print('\n')
     for item in list:   
-        print(f'{enum}. {item}')
+        print(f'[{enum}]. {item}')
         enum += 1
-    print('\n')
 
     try:
-        option = int(input('Insira uma opção: '))
+        option = int(input('\nInsira uma opção: '))
         return option
     except:
         print('\nOpção inválida!')
@@ -71,6 +79,19 @@ def getFullPercent(data):
 
 def getDataByDate(data):
 
+    dates = []
+
+    for item in data:
+        i = item.get('Data')
+
+        if dates.count(i) == 0:
+            dates.append(i)
+
+    first_date = dates[0]
+    last_date = dates[-1]
+
+    print(f'Datas disponíveis: {first_date} até {last_date}')
+
     try:
         date = str(input('\nInsira a data de visualização: '))
 
@@ -93,6 +114,16 @@ def getDataByDate(data):
 
 def getDataByDistrict(data):
 
+    districts = []
+
+    for item in data:        
+        districts.append(item.get('Bairro'))
+
+        if len(districts) == 25:
+            break
+
+    print(f'Bairros disponíveis para visualização: {districts}')
+
     try:
         district = str(input('\nInsira o bairro para visualização: '))
         district = district.title()
@@ -110,12 +141,25 @@ def getDataByDistrict(data):
             count += 1
 
     if count == 0:
-        print('Bairro inválido!')
+        print('\nBairro inválido!')
         return getDataByDistrict(data)
         
 #COMPARAÇÃO DE CASOS POSITIVOS E NEGATIVOS PARA DUAS DATAS
 
 def getDataDateByDate(data):
+
+    dates = []
+
+    for item in data:
+        i = item.get('Data')
+
+        if dates.count(i) == 0:
+            dates.append(i)
+
+    first_date = dates[0]
+    last_date = dates[-1]
+
+    print(f'\nDatas disponíveis: {first_date} até {last_date}')
 
     try:
         ref_date = str(input('\nInsira a data inicial: '))
@@ -173,6 +217,16 @@ def getDataDateByDate(data):
 #Percentual de casos confirmados e suspeitos por bairro:
 
 def getPercentByDistrict(data):
+
+    districts = []
+
+    for item in data:        
+        districts.append(item.get('Bairro'))
+
+        if len(districts) == 25:
+            break
+
+    print(f'Bairros disponíveis para visualização: {districts}')
     
     try:
         district = str(input('\nInsira o bairro para visualização: '))

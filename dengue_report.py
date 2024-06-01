@@ -1,3 +1,15 @@
+#Autor: Adson Victor de Souza Alves
+#Componente Curricular: Algoritmos e Programação I
+#Concluido em: 01/06/2024
+
+#Declaro que este código foi elaborado por mim de forma individual e não contém nenhum
+#trecho de código de outro colega ou de outro autor, tais como provindos de livros e
+#apostilas, e páginas ou documentos eletrônicos da Internet. Qualquer trecho de código
+#de outra autoria que não a minha está destacado com uma citação para o autor e a fonte
+#do código, e estou ciente que estes trechos não serão considerados para fins de avaliação.
+
+#Importação de bibliotecas
+
 import csv
 import os
 import module
@@ -29,6 +41,12 @@ def main():
                 txt_4 = 'muitas partes do mundo, incluindo o Brasil,'
                 txt_5 = 'e representa um grande desafio de saúde pública'
                 txt_6 = 'devido à sua disseminação rápida e aos surtos sazonais.'
+
+                texts = [txt_1, txt_2, txt_3, txt_4, txt_5, txt_6]
+
+                for txt in texts:
+                    txt.center(50)
+                    print(txt)
 
             case 2:
                 opt_2 = module.menu(['Visualizar Dados', 'Atualizar Dados', 'Voltar'])
@@ -76,6 +94,7 @@ def main():
                                         module.getPercentByDistrict(data)
 
                             case 4:
+                                print('\n')
                                 return main()
 
                     case 2:
@@ -90,9 +109,11 @@ def main():
                                 module.editData()
 
                     case 3:
+                        print('\n')
                         return main()
 
             case 3:
+                print('\n')
                 print('Sistema encerrado.')
 
 if __name__ == "__main__":
