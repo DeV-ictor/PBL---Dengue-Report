@@ -303,7 +303,7 @@ def dataUpdate():
 
         for item in data:
             if item.get('Bairro') == district:
-                suspects_2 = item.get('Casos Suspeitos')
+                suspects_2 = int(item.get('Casos Suspeitos'))
                 total_suspects = suspects_2 + suspects
             
         suspects = total_suspects - sumConNeg    
