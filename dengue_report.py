@@ -20,14 +20,14 @@ def main():
 
     opt_1 = 0 #Variável pra inicialização
 
-    with open('./PBL_2/dados.csv', 'r', encoding='utf-8', newline='') as archive:
+    with open('./PBL_DENGUE/dados.csv', 'r', encoding='utf-8', newline='') as archive:
         report = csv.reader(archive)
         headers = next(report) #Cabeçalho
         data = [{header: value for header, value in zip(headers, row)} for row in report]
 
     while opt_1 != 3:
 
-        print('======= DENGUE =======')
+        print('===== DENGUE FREE FEIRA =====')
 
         opt_1 = module.menu(['Sobre a Dengue', 'Dados', 'Sair'])
 
@@ -44,9 +44,13 @@ def main():
 
                 texts = [txt_1, txt_2, txt_3, txt_4, txt_5, txt_6]
 
+                print('\n')
+
                 for txt in texts:
                     txt.center(50)
                     print(txt)
+
+                print('\n')
 
             case 2:
                 opt_2 = module.menu(['Visualizar Dados', 'Atualizar Dados', 'Voltar'])

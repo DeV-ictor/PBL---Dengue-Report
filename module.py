@@ -266,12 +266,12 @@ def getPercentByDistrict(data):
 
 def dataUpdate():
 
-    #PRECISAMOS MANTER O MÓDULO RODANDO ATÉ O USUÁRIO DECIDIR PARAR
-
-    with open('./PBL_2/dados.csv', 'r', encoding='utf-8', newline='') as archive:
+    with open('./PBL_DENGUE/dados.csv', 'r', encoding='utf-8', newline='') as archive:
         report = csv.reader(archive)
         headers = next(report) #Cabeçalho
         data = [{header: value for header, value in zip(headers, row)} for row in report]
+
+    #TODOS OS DADOS SERÃO ATUALIZADOS POR BAIRRO
 
     all_districts = ['Tomba', 'Campo Limpo', 'Muchila', 'Conceição', 'Brasília', 'Mangabeira', 'Calumbi', 'Queimadinha', 'Gabriela', 'Parque Ipê', 'Jardim Cruzeiro', 'Rua Nova', 'Lagoa Grande', 'Aviário', 'Santa Mônica', 'Centro', 'Pedra de Descanso', 'Caseb', 'São João', 'Cidade Nova', 'Jardim Acácia', 'Serraria Brasil', 'Baraúna', 'Cis', 'Ponto Central']
 
@@ -284,6 +284,11 @@ def dataUpdate():
         try:
             date = str(input('Data: '))
             population = str(input('Habitantes: '))
+
+            if population.isnumeric() == False:
+                print('"Habitantes" deve conter apenas números!')
+                return dataUpdate()
+
             suspects = int(input('Casos Suspeitos: '))
             confirmeds = int(input('Casos Negativos: '))
             negatives = int(input('Casos Confirmados: '))
@@ -294,16 +299,25 @@ def dataUpdate():
         
         #ATUALIZAÇÃO DO NÚMERO DE SUSPEITOS
 
+        sumConNeg = confirmeds + negatives
+
+        for item in data:
+            if item.get('Bairro') == district:
+                suspects_2 = item.get('Casos Suspeitos')
+                total_suspects = suspects_2 + suspects
+            
+        suspects = total_suspects - sumConNeg    
+
         #ATUALIZAR NOVOS DADOS
 
-        with open('./PBL_2/dados.csv', 'a', encoding='utf-8', newline='') as dataAppend:
+        with open('./PBL_DENGUE/dados.csv', 'a', encoding='utf-8', newline='') as dataAppend:
             newData = csv.DictWriter(dataAppend, fieldnames=headers)
             newData.writerow({'Data': date, 'Bairro': district, 'Habitantes': population, 'Casos Suspeitos':suspects, 'Casos Confirmados': confirmeds, 'Casos Negativos': negatives})
 
 def editData():
     opt_edit = menu(['Data', 'Bairro', 'Habitantes', 'Casos Suspeitos', 'Casos Negativos', 'Casos Confirmados'])
 
-    with open('./PBL_2/dados.csv', 'r', encoding='utf-8', newline='') as archive:
+    with open('./PBL_DENGUE/dados.csv', 'r', encoding='utf-8', newline='') as archive:
         report = csv.reader(archive)
         headers = next(report) #Cabeçalho
         data = [{header: value for header, value in zip(headers, row)} for row in report]
@@ -320,19 +334,98 @@ def editData():
 
     match opt_edit:
 
-        case 1 | 2 | 3 | 4 | 5 :
+        case 1 | 2 | 3 | 4:
             
             for pos, item in enumerate(data):
                 if pos + 2 == line:
-                    toRep = item
+                    line_to_update = pos
+                    toReplace = item
                     break
+
+            try:   
             
-            toRep.update({column:value})
-            data[pos] = toRep
+                toReplace.update({column:value})
+                data[line_to_update] = toReplace
+            
+            except:
+                print('Valor inválido!')
+                return editData()
+            
+        case 5:
+
+            greater = 0
+            minor = 0
+            
+            for pos, item in enumerate(data):
+                if pos + 2 == line:
+                    line_to_update = pos
+                    toReplace = item
+                    negatives = int(item.get('Casos Negativos'))
+                    suspects = int(item.get('Casos Suspeitos'))
+                    break
+
+            try:
+                greater = max(negatives, int(value))
+                minor = min(negatives, int(value))
+                negatives_diff = greater - minor
+
+                if negatives_diff > suspects:
+                    print('Valor para casos negativos inválido!')
+                    return editData()
+                
+                else:
+                    try:
+                        suspects = suspects - negatives_diff
+                        toReplace.update({column:value})
+                        toReplace.update({'Casos Suspeitos':suspects})
+                        data[line_to_update] = toReplace
+                    except:
+                        print('Valor inválido!')
+                        return editData()
+
+            except ValueError:
+                print('Casos negativos deve conter apenas números!')
+                return editData()
+
+        case 6:
+
+            greater = 0
+            minor = 0
+            
+            for pos, item in enumerate(data):
+                if pos + 2 == line:
+                    line_to_update = pos
+                    toReplace = item
+                    confirmeds = int(item.get('Casos Confirmados'))
+                    suspects = int(item.get('Casos Suspeitos'))
+                    break
+
+            try:
+                greater = max(confirmeds, int(value))
+                minor = min(confirmeds, int(value))
+                confirmeds_diff = greater - minor
+
+                if confirmeds_diff > suspects:
+                    print('Valor para casos negativos inválido!')
+                    return editData()
+                
+                else:
+                    try:
+                        suspects = suspects - confirmeds_diff
+                        toReplace.update({column:value})
+                        toReplace.update({'Casos Confirmados':suspects})
+                        data[line_to_update] = toReplace
+                    except:
+                        print('Valor inválido!')
+                        return editData()
+
+            except ValueError:
+                print('Casos negativos deve conter apenas números!')
+                return editData()
 
     archive.close()
 
-    with open('./PBL_2/dados.csv', 'w', encoding='utf-8', newline='') as f:
+    with open('./PBL_DENGUE/dados.csv', 'w', encoding='utf-8', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=headers)
         writer.writeheader()
         writer.writerows(data)
