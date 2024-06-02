@@ -72,8 +72,11 @@ def main():
                                         module.getFullData(data)
                                     
                                     case 2:
+                                        os.system('cls||clear')
                                         module.getFullPercent(data)
-                                        return 
+
+                                    case _:
+                                        print('\nOpção inválida!\n') 
                             
                             case 2:
                                 opt_dateview = module.menu(['Visualizar Única Data', 'Comparar Datas'])
@@ -85,6 +88,9 @@ def main():
 
                                     case 2:
                                         module.getDataDateByDate(data)
+
+                                    case _:
+                                        print('\nOpção inválida!\n')
                             
                             case 3:
                                 opt_districtview = module.menu(['Visualizar Único Bairro', 'Percentual de Casos'])
@@ -96,10 +102,15 @@ def main():
 
                                     case 2:
                                         module.getPercentByDistrict(data)
+                                    
+                                    case _:
+                                        print('\nOpção inválida!\n')
 
                             case 4:
                                 print('\n')
-                                return main()
+                            
+                            case _:
+                                print('\nOpção inválida!\n')
 
                     case 2:
                         opt_dataupd = module.menu(['Registrar nova data', 'Editar'])
@@ -112,13 +123,21 @@ def main():
                             case 2:
                                 module.editData()
 
+                            case _:
+                                print('\nOpção inválida!\n')
+
                     case 3:
                         print('\n')
-                        return main()
+                    
+                    case _:
+                        print('\nOpção inválida!\n')
 
             case 3:
                 print('\n')
-                print('Sistema encerrado.')
+                print('\nSistema encerrado.')
+
+            case _:
+                print('\nOpção inválida!\n')
 
 if __name__ == "__main__":
     main()

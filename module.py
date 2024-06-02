@@ -90,13 +90,13 @@ def getDataByDate(data):
     first_date = dates[0]
     last_date = dates[-1]
 
-    print(f'Datas disponíveis: {first_date} até {last_date}')
+    print(f'\nDatas disponíveis: {first_date} até {last_date}')
 
     try:
         date = str(input('\nInsira a data de visualização: '))
 
     except:
-        print('\nData inválida!')
+        print('\nData inválida!\n')
         return getDataByDate(data)
 
     count = 0
@@ -107,7 +107,7 @@ def getDataByDate(data):
             count += 1
         
     if count == 0:
-        print('Data inválida!')
+        print('\nData inválida!\n')
         return getDataByDate(data)
     
 #COLETAR AS INFORMAÇÕES POR BAIRRO SOLICITADO
@@ -122,26 +122,25 @@ def getDataByDistrict(data):
         if len(districts) == 25:
             break
 
-    print(f'Bairros disponíveis para visualização: {districts}')
+    print(f'\nBairros disponíveis para visualização: {districts}')
 
     try:
         district = str(input('\nInsira o bairro para visualização: '))
         district = district.title()
 
     except:
-        print('\nBairro inválido!')
+        print('\nBairro inválido!\n')
         return getDataByDistrict(data)
 
     count = 0
 
     for item in data:
         if district in item.values():
-            info = (f' \n=== {item.get('Bairro')} === \n Data: {item.get('Data')} \n Habitantes: {item.get('Habitantes')}\n Casos Suspeitos: {item.get('Casos Suspeitos')}\n Casos Negativos: {item.get('Casos Negativos')}\n Casos Confirmados: {item.get('Casos Confirmados')}\n')
-            print(info.ljust(20))
+            print(f' \n=== {item.get('Bairro')} === \n Data: {item.get('Data')} \n Habitantes: {item.get('Habitantes')}\n Casos Suspeitos: {item.get('Casos Suspeitos')}\n Casos Negativos: {item.get('Casos Negativos')}\n Casos Confirmados: {item.get('Casos Confirmados')}\n')
             count += 1
 
     if count == 0:
-        print('\nBairro inválido!')
+        print('\nBairro inválido!\n')
         return getDataByDistrict(data)
         
 #COMPARAÇÃO DE CASOS POSITIVOS E NEGATIVOS PARA DUAS DATAS
@@ -166,10 +165,9 @@ def getDataDateByDate(data):
         comp_date = str(input('\nInsira a data final: '))
 
     except:
-        print('Valores inválidos!')
+        print('\nValores inválidos!\n')
         return getDataDateByDate(data)
     
-
     count = 0 #Verificar se possui os itens
 
     ref_data_pos = 0 #Acumulador de casos positivos na data referencial
@@ -190,7 +188,7 @@ def getDataDateByDate(data):
             count += 1
         
     if count < 50:
-        print('\nDatas inválidas ou ainda não atualizadas! Selecione uma outra data!')
+        print('\nDatas inválidas ou ainda não atualizadas! Selecione uma outra data!\n')
         return getDataDateByDate(data)
         
     data_pos = comp_data_pos - ref_data_pos 
@@ -200,19 +198,19 @@ def getDataDateByDate(data):
     percent_neg = 100 * comp_data_neg / ref_data_neg
 
     if data_pos > 0:
-        print(f'Houve um aumento na quantidade de casos confirmados, com um aumento de {data_pos} casos confirmados e aumento percentual de {percent_pos:.1f}%.')
+        print(f'\nHouve um aumento na quantidade de casos confirmados, com um aumento de {data_pos} casos confirmados e aumento percentual de {percent_pos:.1f}%.')
 
     elif data_pos < 0:
-        print(f'Houve uma redução na quantidade de casos confirmados, com uma redução de {data_pos} casos confirmados e redução percentual de {percent_pos:.1f}%.')
+        print(f'\nHouve uma redução na quantidade de casos confirmados, com uma redução de {data_pos} casos confirmados e redução percentual de {percent_pos:.1f}%.')
     elif data_pos == 0:
-        print(f'Não houve variação na quantidade de casos confirmados. A variação foi de 0 casos.')    
+        print(f'\nNão houve variação na quantidade de casos confirmados. A variação foi de 0 casos.')    
 
     if data_neg > 0:
-        print(f'Houve um aumento na quantidade de casos negativos, com um aumento de {data_neg} casos negativos e aumento percentual de {percent_neg:.1f}%.')
+        print(f'Houve um aumento na quantidade de casos negativos, com um aumento de {data_neg} casos negativos e aumento percentual de {percent_neg:.1f}%.\n')
     elif data_neg < 0:
-        print(f'Houve uma redução na quantidade de casos negativos, com uma redução de {data_pos} casos negativos e redução percentual de {percent_neg:.1f}%.')
+        print(f'Houve uma redução na quantidade de casos negativos, com uma redução de {data_pos} casos negativos e redução percentual de {percent_neg:.1f}%.\n')
     elif data_neg == 0:
-        print(f'Não houve variação na quantidade de casos negativos. A variação foi de 0 casos.')
+        print(f'Não houve variação na quantidade de casos negativos. A variação foi de 0 casos.\n')
 
 #Percentual de casos confirmados e suspeitos por bairro:
 
@@ -226,14 +224,14 @@ def getPercentByDistrict(data):
         if len(districts) == 25:
             break
 
-    print(f'Bairros disponíveis para visualização: {districts}')
+    print(f'\nBairros disponíveis para visualização: {districts}')
     
     try:
         district = str(input('\nInsira o bairro para visualização: '))
         district.capitalize()
 
     except:
-        print('\nBairro inválido!')
+        print('\nBairro inválido!\n')
         return getDataByDistrict(data)
     
     data_suspect = 0
@@ -253,7 +251,7 @@ def getPercentByDistrict(data):
             count += 1
 
     if count == 0:
-        print('\nBairro inválido!')
+        print('\nBairro inválido!\n')
         return getPercentByDistrict(data)
         
     percent_data_suspect = 100 * data_suspect / data_population
@@ -271,42 +269,49 @@ def dataUpdate():
         headers = next(report) #Cabeçalho
         data = [{header: value for header, value in zip(headers, row)} for row in report]
 
-    #TODOS OS DADOS SERÃO ATUALIZADOS POR BAIRRO
+    #CONTINUAR RODANDO ATÉ O USUÁRIO DECIDIR ENCERRAR
 
-    all_districts = ['Tomba', 'Campo Limpo', 'Muchila', 'Conceição', 'Brasília', 'Mangabeira', 'Calumbi', 'Queimadinha', 'Gabriela', 'Parque Ipê', 'Jardim Cruzeiro', 'Rua Nova', 'Lagoa Grande', 'Aviário', 'Santa Mônica', 'Centro', 'Pedra de Descanso', 'Caseb', 'São João', 'Cidade Nova', 'Jardim Acácia', 'Serraria Brasil', 'Baraúna', 'Cis', 'Ponto Central']
+    option = menu(['Registrar novos dados', 'Encerrar'])
 
-    for i in all_districts:
+    while option != 2:
 
-        print(f'\nAtualizando: {i}\n')
-
-        district = i
-
-        try:
-            date = str(input('Data: '))
-            population = str(input('Habitantes: '))
-
-            if population.isnumeric() == False:
-                print('"Habitantes" deve conter apenas números!')
-                return dataUpdate()
-
-            suspects = int(input('Casos Suspeitos: '))
-            confirmeds = int(input('Casos Negativos: '))
-            negatives = int(input('Casos Confirmados: '))
-
-        except:
-            print('Valor inválido!')
-            return dataUpdate()
-        
-        #ATUALIZAÇÃO DO NÚMERO DE SUSPEITOS
-
-        sumConNeg = confirmeds + negatives
-
-        for item in data:
-            if item.get('Bairro') == district:
-                suspects_2 = int(item.get('Casos Suspeitos'))
-                total_suspects = suspects_2 + suspects
+        match option:
             
-        suspects = total_suspects - sumConNeg    
+            case 1:
+
+                try:
+                    date = str(input('Data: '))
+                    district = str(input('Bairro: '))
+                    population = str(input('Habitantes: '))
+
+                    if population.isnumeric() == False:
+                        print('\n"Habitantes" deve conter apenas números!\n')
+                        return dataUpdate()
+
+                    suspects = int(input('Casos Suspeitos: '))
+                    confirmeds = int(input('Casos Negativos: '))
+                    negatives = int(input('Casos Confirmados: '))
+
+                except:
+                    print('\nValor inválido!\n')
+                    return dataUpdate()
+                
+                #ATUALIZAÇÃO DO NÚMERO DE SUSPEITOS
+
+                sumConNeg = confirmeds + negatives
+
+                for item in data:
+                    if item.get('Bairro') == district:
+                        suspects_2 = int(item.get('Casos Suspeitos'))
+                        total_suspects = suspects_2 + suspects
+                    
+                suspects = total_suspects - sumConNeg
+
+            case 2:
+                print('\nRegistro encerrado!')
+
+            case _:
+                print('\nOpção inválida!\n')
 
         #ATUALIZAR NOVOS DADOS
 
@@ -325,11 +330,11 @@ def editData():
     column = headers[(opt_edit - 1)]
 
     try:
-        line = int(input('Insira a linha que deseja alterar: '))
+        line = int(input('\nInsira a linha que deseja alterar: '))
         value = str(input('Insira o dado atualizado: '))
 
     except:
-        print('Valor inválido!')
+        print('\nValor inválido!\n')
         return editData()
 
     match opt_edit:
@@ -348,7 +353,7 @@ def editData():
                 data[line_to_update] = toReplace
             
             except:
-                print('Valor inválido!')
+                print('\nValor inválido!\n')
                 return editData()
             
         case 5:
@@ -370,7 +375,7 @@ def editData():
                 negatives_diff = greater - minor
 
                 if negatives_diff > suspects:
-                    print('Valor para casos negativos inválido!')
+                    print('\nValor para casos negativos inválido!\n')
                     return editData()
                 
                 else:
@@ -380,11 +385,11 @@ def editData():
                         toReplace.update({'Casos Suspeitos':suspects})
                         data[line_to_update] = toReplace
                     except:
-                        print('Valor inválido!')
+                        print('\nValor inválido!\n')
                         return editData()
 
             except ValueError:
-                print('Casos negativos deve conter apenas números!')
+                print('\nCasos negativos deve conter apenas números!\n')
                 return editData()
 
         case 6:
@@ -406,22 +411,27 @@ def editData():
                 confirmeds_diff = greater - minor
 
                 if confirmeds_diff > suspects:
-                    print('Valor para casos negativos inválido!')
+                    print('\nValor para casos confirmados inválido!\n')
                     return editData()
                 
                 else:
                     try:
                         suspects = suspects - confirmeds_diff
                         toReplace.update({column:value})
-                        toReplace.update({'Casos Confirmados':suspects})
+                        toReplace.update({'Casos Suspeitos':suspects})
                         data[line_to_update] = toReplace
                     except:
-                        print('Valor inválido!')
+                        print('\nValor inválido!\n')
                         return editData()
 
             except ValueError:
-                print('Casos negativos deve conter apenas números!')
+                print('\nCasos confirmados deve conter apenas números!\n')
                 return editData()
+            
+        case _:
+            
+            print('\nOpção inválida!\n')
+            return editData()
 
     archive.close()
 
