@@ -271,7 +271,7 @@ def dataUpdate():
 
     #CONTINUAR RODANDO ATÉ O USUÁRIO DECIDIR ENCERRAR
 
-    option = menu(['Registrar novos dados', 'Encerrar'])
+    option = menu(['Registrar novos dados', 'Voltar'])
 
     while option != 2:
 
@@ -318,16 +318,22 @@ def dataUpdate():
         with open('./PBL_DENGUE/dados.csv', 'a', encoding='utf-8', newline='') as dataAppend:
             newData = csv.DictWriter(dataAppend, fieldnames=headers)
             newData.writerow({'Data': date, 'Bairro': district, 'Habitantes': population, 'Casos Suspeitos':suspects, 'Casos Confirmados': confirmeds, 'Casos Negativos': negatives})
+        
+        option = menu(['Registrar novos dados', 'Encerrar'])
+
 
 def editData():
-    opt_edit = menu(['Data', 'Bairro', 'Habitantes', 'Casos Suspeitos', 'Casos Negativos', 'Casos Confirmados'])
+    opt_edit = menu(['Data', 'Bairro', 'Habitantes', 'Casos Suspeitos', 'Casos Negativos', 'Casos Confirmados', 'Voltar'])
 
     with open('./PBL_DENGUE/dados.csv', 'r', encoding='utf-8', newline='') as archive:
         report = csv.reader(archive)
         headers = next(report) #Cabeçalho
         data = [{header: value for header, value in zip(headers, row)} for row in report]
 
-    column = headers[(opt_edit - 1)]
+    if opt_edit < 7:
+        column = headers[(opt_edit - 1)]
+    else:
+        return None
 
     try:
         line = int(input('\nInsira a linha que deseja alterar: '))

@@ -35,11 +35,11 @@ def main():
 
             case 1:
 
-                txt_1 = 'A dengue é uma doença viral transmitida'
-                txt_2 = 'principalmente pelos mosquitos Aedes aegypti'
-                txt_3 = 'e Aedes albopictus. É uma doença endêmica em'
-                txt_4 = 'muitas partes do mundo, incluindo o Brasil,'
-                txt_5 = 'e representa um grande desafio de saúde pública'
+                txt_1 = 'A    dengue    é    uma   doença   viral   transmitida'
+                txt_2 = 'principalmente   pelos    mosquitos   Aedes    aegypti'
+                txt_3 = 'e   Aedes albopictus.   É   uma   doença   endêmica em'
+                txt_4 = 'muitas   partes   do   mundo,    incluindo  o  Brasil,'
+                txt_5 = 'e   representa   um   grande  desafio de saúde pública'
                 txt_6 = 'devido à sua disseminação rápida e aos surtos sazonais.'
 
                 texts = [txt_1, txt_2, txt_3, txt_4, txt_5, txt_6]
